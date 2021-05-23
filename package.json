@@ -2,9 +2,8 @@
   "name": "instaclone",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon --exec node server.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/SeungseOh/instaclone-backend/issues"
   },
-  "homepage": "https://github.com/SeungseOh/instaclone-backend#readme"
+  "homepage": "https://github.com/SeungseOh/instaclone-backend#readme",
+  "dependencies": {
+    "apollo-server": "^2.24.1",
+    "graphql": "^15.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
 }
