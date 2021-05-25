@@ -10,9 +10,7 @@ import {
 // __dirname 은 현재 실행 중인 폴더 경로
 // /**/*.typeDefs.js : 모든 폴더의 모든 이름의 typeDefs.js
 const loadedTypes = loadFilesSync(`${__dirname}/**/*.typeDefs.js`);
-const loadedResolvers = loadFilesSync(
-  `${__dirname}/**/*.{queries,mutations}.js`
-);
+const loadedResolvers = loadFilesSync(`${__dirname}/**/*.resolvers.js`);
 
 const typeDefs = mergeTypeDefs(loadedTypes);
 const resolvers = mergeResolvers(loadedResolvers);
