@@ -12,3 +12,13 @@ export const getUser = async (token) => {
     return null;
   }
 };
+
+// * 유저의 정보가 없을 경우 에러 요청
+export const protectResolver = (user) => {
+  if (!user) {
+    return {
+      ok: false,
+      error: "You need to login.",
+    };
+  }
+};
