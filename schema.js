@@ -1,9 +1,4 @@
-import {
-  loadFilesSync,
-  makeExecutableSchema,
-  mergeResolvers,
-  mergeTypeDefs,
-} from "graphql-tools";
+import { loadFilesSync, mergeResolvers, mergeTypeDefs } from "graphql-tools";
 
 // loadfilessync는 각 파일들의 export default 들을 불러오므로 설정 필요
 // loadFilesSync 를 통해 파일 경로 패턴 정의
@@ -12,10 +7,5 @@ import {
 const loadedTypes = loadFilesSync(`${__dirname}/**/*.typeDefs.js`);
 const loadedResolvers = loadFilesSync(`${__dirname}/**/*.resolvers.js`);
 
-const typeDefs = mergeTypeDefs(loadedTypes);
-const resolvers = mergeResolvers(loadedResolvers);
-
-//makeExecutableSchema 를 사용하여 typedef와 resolver를 하나의 스키마로 정의
-const schema = makeExecutableSchema({ typeDefs, resolvers });
-
-export default schema;
+export const typeDefs = mergeTypeDefs(loadedTypes);
+export const resolvers = mergeResolvers(loadedResolvers);

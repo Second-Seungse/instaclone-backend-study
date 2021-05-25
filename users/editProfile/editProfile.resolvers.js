@@ -7,7 +7,7 @@ export default {
     editProfile: protectedResolver(
       async (
         _,
-        { firstName, lastName, username, email, password: newPassword },
+        { firstName, lastName, username, email, password: newPassword, bio },
         { loggedInUser }
       ) => {
         let uglyPassword = null;
@@ -23,6 +23,7 @@ export default {
             lastName,
             username,
             email,
+            bio,
             // * uglyPassword가 true이면 object를 반환한다.
             ...(uglyPassword && { password: uglyPassword }),
           },
