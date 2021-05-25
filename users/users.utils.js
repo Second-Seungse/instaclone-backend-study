@@ -22,3 +22,14 @@ export const protectResolver = (user) => {
     };
   }
 };
+
+export const protectedResolver =
+  (ourResolver) => (root, args, context, info) => {
+    if (!context.loggedInUser) {
+      return {
+        ok: false,
+        error: "Please login to perform this action.",
+      };
+    }
+    return ourResolver(root, args, context, info);
+  };
