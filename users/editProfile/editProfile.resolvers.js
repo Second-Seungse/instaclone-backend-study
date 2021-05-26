@@ -19,13 +19,17 @@ export default {
         },
         { loggedInUser }
       ) => {
-
-        const { filename, createReadStream } = await avatar;
-        const readStream = createReadStream();
-        const writeStream = createWriteStream(
-          process.cwd() + "/uploads/" + filename
-        );
-        readStream.pipe(writeStream);
+        let avatarUrl = undefined;
+        if (avatar) {
+          const { filename, createReadStream } = await avatar;
+          const newfilename = `${loggedInUser.id}-${Date.now()}-${filename}`;
+          const readStream = createReadStream();
+          const writeStream = createWriteStream(
+            process.cwd() + "/uploads/" + newfilename
+          );
+          readStream.pipe(writeStream);
+          avatarUrl = `http://localhost:4000/static/${newfilename}`;
+        }
 
         let uglyPassword = null;
         if (newPassword) {
@@ -43,6 +47,7 @@ export default {
             bio,
             // * uglyPassword가 true이면 object를 반환한다.
             ...(uglyPassword && { password: uglyPassword }),
+            ...(avatarUrl && { avatar: avatarUrl }),
           },
         });
         if (updatedUser.id) {
