@@ -14,6 +14,7 @@ export default {
           error: "User not found",
         };
       }
+      // 팔로워들을 페이지로 노출
       const followers = await client.user
         .findUnique({ where: { username } })
         .followers({
