@@ -15,6 +15,7 @@ export default {
         };
       }
       // 팔로워들을 페이지로 노출
+      // findUnique로 유저의 id를 기준으로한 유저를 찾고 그 유저의 followers리스트를 다시 pagination으로 검색
       const followers = await client.user
         .findUnique({ where: { username } })
         .followers({
