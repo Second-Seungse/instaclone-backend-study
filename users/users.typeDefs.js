@@ -3,7 +3,7 @@ import { gql } from "apollo-server";
 // * totalFollowing, totalFollowers 등 DB에 없는 값을 조회하는경우 resolver를 찾아 참조한다.
 export default gql`
   type User {
-    id: String!
+    id: Int!
     firstName: String!
     lastName: String
     username: String!
