@@ -2,7 +2,7 @@ import { createWriteStream } from "fs";
 import client from "../../client";
 import bcrypt from "bcrypt";
 import { protectedResolver } from "../users.utils";
-import { uploadPhoto } from "../../shared/shared.utils";
+import { uploadToS3 } from "../../shared/shared.utils";
 
 export default {
   Mutation: {
@@ -22,7 +22,7 @@ export default {
       ) => {
         let avatarUrl = undefined;
         if (avatar) {
-          avatarUrl = await uploadPhoto(avatar, loggedInUser.id);
+          avatarUrl = await uploadToS3(avatar, loggedInUser.id, "avatars");
           /**
            * * 서버내부에 파일을 저장하는 Stream
           const { filename, createReadStream } = await avatar;
