@@ -1,5 +1,6 @@
 import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
+import { deleteFromS3 } from "../../shared/shared.utils";
 
 export default {
   Mutation: {
@@ -10,6 +11,7 @@ export default {
         },
         select: {
           userId: true,
+          file: true,
         },
       });
       if (!photo) {
@@ -23,11 +25,12 @@ export default {
           error: "Not authorized.",
         };
       } else {
-        await client.photo.delete({
+        await deleteFromS3(photo.file);
+        /* await client.photo.delete({
           where: {
             id,
           },
-        });
+        }); */
         return {
           ok: true,
         };
