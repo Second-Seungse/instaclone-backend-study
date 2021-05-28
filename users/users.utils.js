@@ -25,7 +25,6 @@ export const protectResolver = (user) => {
 
 export const protectedResolver =
   (ourResolver) => (root, args, context, info) => {
-    console.log(info.operation);
     // * 로그인이 되지 않은 상태인 경우
     if (!context.loggedInUser) {
       // * 로그인이 필요한 query는 전부 ok와 error를 정의해야하는 번거로움을 해결

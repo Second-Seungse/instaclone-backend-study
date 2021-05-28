@@ -2,6 +2,7 @@ import { createWriteStream } from "fs";
 import client from "../../client";
 import bcrypt from "bcrypt";
 import { protectedResolver } from "../users.utils";
+import { uploadPhoto } from "../../shared/shared.utils";
 
 export default {
   Mutation: {
@@ -21,6 +22,9 @@ export default {
       ) => {
         let avatarUrl = undefined;
         if (avatar) {
+          avatarUrl = await uploadPhoto(avatar, loggedInUser.id);
+          /**
+           * * 서버내부에 파일을 저장하는 Stream
           const { filename, createReadStream } = await avatar;
           const newfilename = `${loggedInUser.id}-${Date.now()}-${filename}`;
           const readStream = createReadStream();
@@ -28,7 +32,8 @@ export default {
             process.cwd() + "/uploads/" + newfilename
           );
           readStream.pipe(writeStream);
-          avatarUrl = `http://localhost:4000/static/${newfilename}`;
+          avatarUrl = `http://localhost:4000/static/${newFilename}`;
+           */
         }
 
         let uglyPassword = null;
