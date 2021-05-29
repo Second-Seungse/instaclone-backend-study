@@ -25,7 +25,7 @@ model User {
   following User[]    @relation("FollowRelation", references: [id])
   comments  Comment[]
   rooms     Room[]
-  Message   Message[]
+  messages  Message[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
