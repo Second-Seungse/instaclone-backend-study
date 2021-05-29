@@ -1,7 +1,7 @@
 import AWS from "aws-sdk";
 
 AWS.config.update({
-  region: "ap-northeast-2",
+  region: process.env.AWS_REGION,
   credentials: {
     accessKeyId: process.env.AWS_KEY,
     secretAccessKey: process.env.AWS_SECRET,
@@ -24,7 +24,7 @@ export const uploadToS3 = async (file, userId, folderName) => {
     const { Location } = await new AWS.S3()
       .upload(
         {
-          Bucket: "my-instaclone-uploads",
+          Bucket: process.env.AWS_BUCKET,
           Key: objectName,
           ACL: "public-read",
           Body: readStream,
@@ -48,13 +48,13 @@ export const uploadToS3 = async (file, userId, folderName) => {
 export const deleteFromS3 = async (fileUrl) => {
   try {
     const objectName = fileUrl.replace(
-      "https://my-instaclone-uploads.s3.ap-northeast-2.amazonaws.com/",
+      `https://${process.env.AWS_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/`,
       ""
     );
-    const result = await new AWS.S3()
+    await new AWS.S3()
       .deleteObject(
         {
-          Bucket: "my-instaclone-uploads",
+          Bucket: process.env.AWS_BUCKET,
           Key: objectName,
         },
         (err) => {

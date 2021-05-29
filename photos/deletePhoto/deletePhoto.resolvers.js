@@ -26,11 +26,11 @@ export default {
         };
       } else {
         await deleteFromS3(photo.file);
-        /* await client.photo.delete({
+        await client.photo.delete({
           where: {
             id,
           },
-        }); */
+        });
         return {
           ok: true,
         };
