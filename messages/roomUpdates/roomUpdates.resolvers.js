@@ -24,7 +24,6 @@ export default {
         if (!room) {
           throw new Error("You shall not see this.");
         }
-        // ? 이 부분이 확실하게 이해가 가지는 않는다.
         return withFilter(
           () => pubsub.asyncIterator(NEW_MESSAGE),
           async ({ roomUpdates }, { id }, { loggedInUser }) => {
