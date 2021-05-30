@@ -1,4 +1,6 @@
 import client from "../../client";
+import { NEW_MESSAGE } from "../../constants";
+import pubsub from "../../pubsub";
 import { protectedResolver } from "../../users/users.utils";
 
 export default {
@@ -55,7 +57,7 @@ export default {
           }
         }
         // * 이미 존재하는 채팅방이거나 신규로 개설하는 채팅방을 세팅하고 메시지를 만들어 채팅방에 연결한다.
-        await client.message.create({
+        const message = await client.message.create({
           data: {
             payload,
             room: {
@@ -70,6 +72,7 @@ export default {
             },
           },
         });
+        pubsub.publish(NEW_MESSAGE, { roomUpdates: { ...message } });
         return {
           ok: true,
         };
