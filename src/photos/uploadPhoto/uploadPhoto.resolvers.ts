@@ -12,7 +12,7 @@ const resolver: Resolvers = {
           hashtagObj = processHashtags(caption);
         }
         const fileUrl = await uploadToS3(file, loggedInUser.id, "uploads");
-        return client.photo.create({
+        const result = await client.photo.create({
           data: {
             file: fileUrl,
             caption,
@@ -29,6 +29,17 @@ const resolver: Resolvers = {
             }),
           },
         });
+        if (result.id) {
+          return {
+            ok: true,
+            error: null,
+          };
+        } else {
+          return {
+            ok: false,
+            error: "Photo update fail",
+          };
+        }
       }
     ),
   },

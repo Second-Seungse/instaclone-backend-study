@@ -43,8 +43,6 @@ const resolver: Resolvers = {
           },
         });
 
-        console.log(user);
-
         // * 로그인한 유저의 정보가 있는지 확인
         if (user) {
           // * avatart 변경
