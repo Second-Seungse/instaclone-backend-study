@@ -10,13 +10,38 @@ const PORT = process.env.PORT;
 const apollo = new ApolloServer({
   resolvers,
   typeDefs,
-  context: async ({ req }) => {
-    // * http와 ws 두 가지의 프로토콜을 다룰 수 있기때문에 검증
-    if (req) {
+  context: async (ctx) => {
+    if (ctx.req) {
+      // * http
       return {
-        loggedInUser: await getUser(req.headers.token),
+        loggedInUser: await getUser(ctx.req.headers.token),
+      };
+    } else {
+      // * websocket
+      const {
+        connection: { context },
+      } = ctx;
+      return {
+        loggedInUser: context.loggedInUser,
       };
     }
+  },
+
+  subscriptions: {
+    /** 
+     * @param {Object} connectionParams An object containing parameters included in the request, such as an authentication token.
+     * @param {webSocket} webSocket The connecting or disconnecting WebSocket.
+     * @param {ConnectionContext} context Context object for the WebSocket connection. This is not the context object for the associated subscription operation.
+     */
+    onConnect: async ({ token }) => {
+      if (!token) {
+        throw new Error("You can't listen.");
+      }
+      const loggedInUser = await getUser(token);
+      return {
+        loggedInUser,
+      };
+    },
   },
 });
 
