@@ -5,3 +5,11 @@ export default gql`
     uploadPhoto(file: Upload!, caption: String): Photo
   }
 `;
+
+/* 
+export default gql`
+  type Mutation {
+    uploadPhoto(file: Upload!, caption: String): MutationResponse!
+  }
+`;
+ */
