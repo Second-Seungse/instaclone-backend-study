@@ -1,18 +1,18 @@
+import client from "../../client";
 import { uploadToS3 } from "../../shared/shared.utils";
-import { Resolvers } from "../../types";
 import { protectedResolver } from "../../users/users.utils";
 import { processHashtags } from "../photos.utils";
 
-const resolver: Resolvers = {
+export default {
   Mutation: {
     uploadPhoto: protectedResolver(
-      async (_, { file, caption }, { client, loggedInUser }) => {
+      async (_, { file, caption }, { loggedInUser }) => {
         let hashtagObj = [];
         if (caption) {
           hashtagObj = processHashtags(caption);
         }
         const fileUrl = await uploadToS3(file, loggedInUser.id, "uploads");
-        const result = await client.photo.create({
+        return client.photo.create({
           data: {
             file: fileUrl,
             caption,
@@ -23,26 +23,12 @@ const resolver: Resolvers = {
             },
             ...(hashtagObj.length > 0 && {
               hashtags: {
-                // * connectOrCreate는 조회해서 대상이 없으면 생성한다.
                 connectOrCreate: hashtagObj,
               },
             }),
           },
         });
-        if (result.id) {
-          return {
-            ok: true,
-            error: null,
-          };
-        } else {
-          return {
-            ok: false,
-            error: "Photo update fail",
-          };
-        }
       }
     ),
   },
 };
-
-export default resolver;
