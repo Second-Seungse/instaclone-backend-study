@@ -1,12 +1,11 @@
+import client from "../../client";
 import { NEW_MESSAGE } from "../../constants";
 import pubsub from "../../pubsub";
-import { Resolvers } from "../../types";
 import { protectedResolver } from "../../users/users.utils";
-
-const resolver: Resolvers = {
+export default {
   Mutation: {
     sendMessage: protectedResolver(
-      async (_, { payload, roomId, userId }, { client, loggedInUser }) => {
+      async (_, { payload, roomId, userId }, { loggedInUser }) => {
         let room = null;
         if (userId) {
           // * Message를 받을 유저의 id가 유효한지 검사
@@ -72,13 +71,13 @@ const resolver: Resolvers = {
             },
           },
         });
+        console.log(message);
         pubsub.publish(NEW_MESSAGE, { roomUpdates: { ...message } });
         return {
           ok: true,
+          id: message.id,
         };
       }
     ),
   },
 };
-
-export default resolver;
