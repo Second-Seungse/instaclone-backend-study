@@ -6,7 +6,9 @@
     "preinstall": "npx npm-force-resolutions",
     "dev": "nodemon --exec ts-node src/server --ext ts,js --delay 2",
     "migrate": "npx prisma migrate dev",
-    "studio": "npx prisma studio"
+    "studio": "npx prisma studio",
+    "build": "babel src --out-dir build",
+    "start": "node build/server"
   },
   "repository": {
     "type": "git",
@@ -20,6 +22,7 @@
   },
   "homepage": "https://github.com/SeungseOh/instaclone-backend#readme",
   "dependencies": {
+    "@babel/cli": "^7.14.5",
     "@prisma/client": "^2.23.0",
     "apollo-server": "^2.24.1",
     "apollo-server-express": "^2.24.1",
@@ -36,6 +39,7 @@
     "@babel/core": "^7.14.3",
     "@babel/node": "^7.14.2",
     "@babel/preset-env": "^7.14.2",
+    "@babel/preset-typescript": "^7.14.5",
     "nodemon": "^2.0.7",
     "prisma": "^2.23.0",
     "ts-node": "^10.0.0",
