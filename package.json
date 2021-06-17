@@ -3,12 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "preinstall": "npx npm-force-resolutions",
+    "start": "ts-node src/server",
     "dev": "nodemon --exec ts-node src/server --ext ts,js --delay 2",
+    "preinstall": "npx npm-force-resolutions",
     "migrate": "npx prisma migrate dev",
-    "studio": "npx prisma studio",
-    "build": "babel src --out-dir build",
-    "start": "node build/server"
+    "studio": "npx prisma studio"
   },
   "repository": {
     "type": "git",
