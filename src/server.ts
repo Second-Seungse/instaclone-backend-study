@@ -12,7 +12,7 @@ const apollo = new ApolloServer({
   resolvers,
   typeDefs,
   playground: true,
-  introspection: true,
+  introspection: true,  
   context: async (ctx) => {
     if (ctx.req) {
       // * http
